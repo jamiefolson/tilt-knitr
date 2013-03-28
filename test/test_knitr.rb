@@ -12,7 +12,7 @@ describe Tilt::KnitrTemplate do
 	
 	it "basics" do
 		template = Tilt::KnitrTemplate.new { "```{r echo=FALSE, results='asis'}\ncat(6 * 6)\n```" }
-		assert_equal "36\n", template.render
+		assert_equal "36", template.render
   end
 	
 end
