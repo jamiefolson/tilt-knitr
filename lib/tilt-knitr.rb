@@ -5,12 +5,19 @@ module Tilt
     # knitr template
     # https://github.com/yihui/knitr
     class KnitrTemplate < Template
-        def initialize_engine; end
+        @fig_path = "figure"
+        def initialize_engine; 
+                stdin, stdout, stderr = Open3.popen3('R --vanilla --slave -e "library(knitr)"')
+               err = stderr.readlines.join
+                if ! err.empty?
+                    raise LoadError, err
+                end
+        end
 
         def prepare; end
 
         def evaluate(scope, locals, &block)
-                fig_path = "figure"
+                fig_path = @fig_path
                 if locals.has_key? "fig.path"
                     fig_path = locals["fig.path"]
                 end
